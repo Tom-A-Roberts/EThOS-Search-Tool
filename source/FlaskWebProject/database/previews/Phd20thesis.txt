@@ -1,0 +1,30 @@
+Computer simulation studies of complex magnetic materials
+by Weiwei Wang
+With the development of both computing power and software engineering, computer
+simulation of the micromagnetic model or atomistic spin model, has become an impor-
+tant tool for studying a wide range of different complex phenomena in magnetic ma-
+terials. Meanwhile, the rapid improvement of advanced measurement techniques has
+allowed the probing of ultrafast magnetization dynamics, as well as the magnetic phe-
+nomena involving charge current, heat and light. The simulation of magnetism is now
+moving towards a multiphysics method. Therefore, fast, user-friendly, and extensible
+codes with accurate algorithms are helpful in understanding the physics and designing
+novel magnetic devices on the nanoscale.
+In the preparation of this thesis we have developed Fidimag, which is a Python/C sim-
+ulation tool supporting both micromagnetic and atomistic spin models. The software
+has also been extended to support the Landau-Lifshitz-Baryakhtar (LLBar) equation.
+Using Fidimag, we have performed simulations to study the domain-wall motion and
+spin-wave decaywith the LLBar equation. We also explain the exchange damping in the
+LLBar equation as the phenomenological nonlocal damping by linking it to spin pump-
+ing, therefore, LLBar equation can be considered as a phenomenological equation of the
+nonlocal damping.
+We studied magnon-induced domain-wall motion in the presence of Dzyaloshinskii-
+Moriya interaction (DMI) numerically and theoretically. We find that the presence of
+DMI and easy-plane anisotropy can drive the domain wall very effectively and that the
+domain-wall velocity depends on the sign of DMI constant. While the negative velocity
+is considered as a result of angular momentum conservation, we attribute this fast
+domain-wall motion to linear momentum transfer between magnons and the domain
+wall. By numerically solving the Landau-Lifshitz-Gilbert equation with a classical
+spin model on a two-dimensional system, we show that both magnetic skyrmions and
+skyrmion lattices can be moved with microwave magnetic fields. The mechanism is
+enabled by breaking the axial symmetry of the skyrmion with a static in-plane external
+field.

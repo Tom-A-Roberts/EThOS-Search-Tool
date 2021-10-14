@@ -1,0 +1,32 @@
+A Language-Independent Static Checking System for Coding Conventions
+Despite decades of research aiming to ameliorate the difficulties of creat-
+ing software, programming still remains an error-prone task. Much work
+in Computer Science deals with the problem of specification, or writing the
+right program, rather than the complementary problem of implementation, or
+writing the program right. However, many desirable software properties (such
+as portability) are obtained via adherence to coding standards, and there-
+fore fall outside the remit of formal specification and automatic verification.
+Moreover, code inspections and manual detection of standards violations are
+time consuming.
+To address these issues, this thesis describes Exstatic, a novel framework
+for the static detection of coding standards violations. Unlike many other
+static checkers Exstatic can be used to examine code in a variety of lan-
+guages, including program code, in-line documentation, markup languages
+and so on. This means that checkable coding standards adhered to by a
+particular project or institution can be handled by a single tool. Conse-
+quently, a major challenge in the design of Exstatic has been to invent a
+way of representing code from a variety of source languages. Therefore,
+this thesis describes ICODE, which is an intermediate language suitable for
+representing code from a number of different programming paradigms. To
+substantiate the claim that ICODE is a universal intermediate language, a
+proof strategy has been developed: for a number of different programming
+paradigms (imperative, declarative, etc.), a proof is constructed to show that
+semantics-preserving translation exists from an exemplar language (such as
+IMP or PCF) to ICODE.
+The usefulness of Exstatic has been demonstrated by the implementa-
+tion of a number of static analysers for different languages. This includes a
+checker for technical documentation written in Javadoc which validates doc-
+uments against the Sun Microsystems (now Oracle) Coding Conventions and
+a checker for HTML pages against a site-specific standard. A third system is
+targeted at a variant of the Python language, written by the author, called
+python-csp, based on Hoares Communicating Sequential Processes.

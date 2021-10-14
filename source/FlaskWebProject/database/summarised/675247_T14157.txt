@@ -1,0 +1,5 @@
+This is the case for many endovascular
+device manufacturers, where advanced non-linear Finite Element Analysis methods
+are still to be incorporated into their product design functions. To encourage
+adoption this thesis explores the merits and limitations of newly developed
+constitutive models as implemented into leading numerical analysis software suites.

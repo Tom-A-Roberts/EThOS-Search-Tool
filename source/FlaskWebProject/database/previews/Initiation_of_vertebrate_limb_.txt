@@ -1,0 +1,29 @@
+ProQuest Dissertations
+Development of paired appendages at appropriate levels along the
+body axis characterizes the jawed vertebrate body plan. Molecular networks
+that operate within limb buds have received much attention, although very
+little is known about how limb budding is initiated. Here I show that beads
+soaked in Fibroblast growth factors (FGFs) and placed in prospective flank of
+chick embryos induce formation of ectopic limb buds, which contain their
+own signaling regions and develop into complete limbs. Application of FGF
+to anterior flank induces ectopic wings, and FGF applied to posterior flank
+induces ectopic legs. Hox genes are good candidates for encoding position
+in lateral plate mesoderm along the body axis, and thus determining where
+limbs form. If particular combinations of Hox gene expression determine
+where wings and legs develop, then formation of additional limbs from flank
+should involve changes in Hox gene expression which reflect the type of
+limb induced. Here I show that the same population of flank cells can be
+induced to form wing or leg. Induction of ectopic limbs is accompanied by
+specific changes in expression of 3 Hox genes in lateral plate mesoderm
+which reproduce, in the flank, expression patterns found at normal limb
+levels. Together, these results suggest that local production of FGF may
+initiate limb development, and that Hox gene expression may specify limb
+position.
+Pythons lack forelimbs, have vestigial hindlimbs, and regional
+specialization of the axial skeleton has been lost. I have examined patterns
+of Hox gene expression in python embryos, and show that the uniform
+pattern of vertebrae is associated with uniform Hox gene expression.
+Transplantation experiments and analysis of gene expression in python
+hindlimbs suggest that limb development is arrested due to failed apical
+ridge formation. Absence of a ridge in pythons may result from failure of limb
+ectoderm to respond to mesenchymal signals.

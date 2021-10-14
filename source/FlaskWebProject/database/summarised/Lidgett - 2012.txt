@@ -1,0 +1,3 @@
+The overall objective of this thesis was to develop a methodology for
+predicting the high strain rate properties of macro scale polymer composite
+materials through micro and meso scale finite element modelling.

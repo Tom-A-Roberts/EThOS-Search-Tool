@@ -1,0 +1,231 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" name="viewport" content="width=device-width">
+	<title>EThOS Search Tool</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="static/content/style.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+	<div id="wrapper" class="toggled">
+
+		<!-- Sidebar -->
+		<div id="sidebar-wrapper">
+			<ul class="sidebar-nav">
+				<li class="white-font">
+					<a href="#menu-toggle" id="menu-toggle" style="outline: 0 !important;"><i class="fa fa-align-left sidebar-icon fa-lg" style="padding-top: 20px;"></i></a>
+				</li>
+				<li class="sidebar-brand white-font">
+					<h1 style="margin-top: 0;">EThOS</h1>
+					<h3>British Library</h3>
+				</li>
+
+				<button type="button" class="btn btn-primary pdf-zone" style="position:absolute;right:0px;top:10px;" onclick="transition_to_results()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+
+				<li class="sidebar-brand white-font dev-tools">
+
+					<h3>Developer Tools <i class="fa fa-sliders " aria-hidden="true" style="display: inline"></i></h3>
+
+
+					<span class="dev-span" style="display: flex;">
+						<button type="button" class="btn btn-primary btn-dev" onclick="clear_search()">Clear Search <i class="fa fa-trash" aria-hidden="true"></i></button>
+						<button type="button" class="btn btn-primary btn-dev" onclick="refresh_backend()">Get Server Status <i class="fa fa-refresh" aria-hidden="true"></i></button>
+
+					</span>
+
+					<span class="dev-span" style="display: flex;">
+						<button type="button" class="btn btn-primary btn-dev" onclick="delete_generated_data()">Delete Generated Data <i class="fa fa-trash" aria-hidden="true"></i></button>
+						<button type="button" class="btn btn-primary btn-dev" onclick="rebuild_generated_data()">Re-build Generated Data <i class="fa fa-wrench" aria-hidden="true"></i></button>
+					</span>
+
+					<span class="dev-span" style="display: flex;">
+						<button type="button" class="btn btn-primary btn-dev" onclick="delete_sumarisations()">Delete Summarisations <i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button>
+						<button type="button" class="btn btn-primary btn-dev" onclick="rebuild_summarisations()">Re-build Summarisations <i class="fa fa-wrench" aria-hidden="true"></i></button>
+					</span>
+
+					<span class="dev-span" style="display: flex;">
+						<button type="button" class="btn btn-primary btn-dev" onclick="group_search()">Show groups menu</button>
+					</span>
+
+
+					<!--<span class="dev-span" style="display: flex;">
+                        <p class="slider-label">Number of groups</p>
+                    </span>
+					<span class="dev-span" style="display: flex;">
+						<input type="range" class="custom-range" min="1" max="15" value="4" id="group_number_range">
+                        <p class="slider-label" id="group_number_range_indicator">4</p>
+					</span>-->
+
+
+					<p style="margin-bottom: 0; font-size: 0.9rem;" id="dev-log">Loading...</p>
+
+					<div class="progress" style="margin-left: 55px;" id="progressbar">
+						<div class="progress-bar progress-bar-striped" id="progress_percent" role="progressbar" style="width: 0%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+
+
+				</li>
+
+			</ul>
+		</div>
+		<!-- /#sidebar-wrapper -->
+		<!-- Page Content -->
+		<div id="page-content-wrapper">
+			<div class="container-fluid" style="padding-right: 0px;">
+				<div class="section full-width-section section-active">
+
+					<div class="container" style="padding-left: 0px;" id="search-zone">
+
+
+						<div class="row white-bg">
+							<div class="col-8" style="padding-right: 25px;">
+
+								<div style="padding-top: 50px;">
+
+
+									<h1>Search <i class="fa fa-search" aria-hidden="true"></i> </h1>
+									<p>Please enter words that summarize what you are looking for.</p>
+									<div class="input-group md-form form-sm form-1 pl-0">
+
+										<form id="search_form" style="width:100%">
+											<!--<div class="form-row">-->
+											<div class="input-group mb-3">
+
+												<input class="form-control my-0 py-1 search-box" type="text" id="searchbox" placeholder="Search terms" aria-label="Search">
+												<div class="input-group-append">
+													<button class="btn btn-outline-secondary" type="submit" value="submit">
+														<i class="fa fa-search dark-text" aria-hidden="true" style="font-size: 1.5rem;"></i>
+													</button>
+												</div>
+
+											</div>
+											<!-- </div> -->
+										</form>
+
+
+									</div>
+
+								</div>
+							</div>
+
+							<div class="col" id="hide-image">
+								<img src="static/content/nu-skills-hub-2402.jpg" class="resize-image" alt="Responsive image">
+							</div>
+						</div>
+
+
+					</div>
+
+					<div id="main-body">
+						<!--Results Zone-->
+						<div class="container results-zone zone-title" style="margin-bottom: 0">
+							<div class="row">
+								<h2 id="results-title">PDF Results</h2>
+
+							</div>
+							<button type="button" class="btn-sm btn-primary" onclick="transition_to_groups()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+						</div>
+						<div class="container-lg results-zone" id="results-zone">
+
+						</div>
+
+						<!--Start Zone-->
+						<div class="container start-zone">
+							<h2 style="margin-top: 15px;">System Queue</h2>
+							<p id="start-zone-body" style="white-space: pre-wrap;"></p>
+						</div>
+                        <div class="container-lg start-zone" id="start-tickets-zone">
+
+                        </div>
+
+						<!--pdf Zone-->
+						<div class="container-lg pdf-zone">
+							<iframe src="static/content/pages.pdf" width="100%" style="height: 99vh;" id="pdf-iframe">
+							</iframe>
+						</div>
+
+						<!--Summarisation Zone-->
+						<div class="container-lg summarisation-zone" id="summarisation-zone">
+							<div class="row">
+								<button type="button" class="btn btn-primary" onclick="transition_to_results()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+							</div>
+							<h2 id="summarisation-title" style="margin-top: 15px;">Loading...</h2>
+							<p id="summarisation-body" style="white-space: pre-wrap;">...</p>
+						</div>
+
+						<!--Groups Zone-->
+						<div class="container groups-zone  zone-title">
+							<div class="row" style="margin-bottom: 5px;">
+                                <button type="button" class="btn btn-primary" onclick="transition_to_start()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+                            </div>
+							<div class="row">
+								<h2 id="groups-title">Similar Paper Groups</h2>
+
+							</div>
+							<p style="margin-bottom: 0">Please select a group that most closely matches what you are looking for.</p>
+							<a href="#" class="silent-link" id="raw_list_button"><i class="fa fa-list" aria-hidden="true" style="padding-right: 3px"></i>Show raw list of results</a>
+						</div>
+						<div class="container-lg groups-zone" id="group-results-zone">
+						</div>
+
+						<!--Submit-Ticket Zone-->
+						<div class="container-lg submit-ticket-zone" id="submit-ticket-zone">
+							<div class="row" style="margin-top: 8px">
+								<button type="button" class="btn btn-primary" onclick="transition_to_start()"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+							</div>
+							<h2 id="submit-ticket-zone-title" style="margin-top: 15px;">Submit New Search Ticket</h2>
+							<p id="submit-ticket-zone-body" class="bright-colour" style="white-space: pre-wrap;">Loading...</p>
+							<p class="slider-label">Number of groups</p>
+							<!--<span class="span" style="display: flex;">
+								<span class="dev-span" style="display: flex;">
+		</span>-->
+							<span class="submission-span" style="display: flex;">
+								<input type="range" class="custom-range" min="1" max="15" value="4" id="group_number_range" style="width: 16rem;">
+								<p class="slider-label" id="group_number_range_indicator" style="padding-left: 10px;">4</p>
+							</span>
+							<span class="submission-span" style="display: flex;">
+								<label for="camount">Clustering amount:</label>
+								<input id="camount" type="number" value="300">
+							</span>
+							<button type="button" class="btn btn-primary" onclick="submit_ticket()">Submit <i class="fa fa-check" aria-hidden="true"></i></button>
+							<!--<div class="row">
+
+		</div>-->
+						</div>
+
+					</div>
+
+
+
+
+				</div>
+			</div>
+
+
+			<!-- /#page-content-wrapper -->
+		</div>
+	</div>
+
+	<!-- /#wrapper -->
+	<!-- Menu Toggle Script -->
+	<script>
+		$("#menu-toggle").click(function (e) {
+			e.preventDefault();
+			$("#wrapper").toggleClass("toggled");
+		});
+	</script>
+<script src="static/EThOS_scripts/searching.js"></script>
+<script src="static/EThOS_scripts/clientstate.js"></script>
+<script src="static/EThOS_scripts/clientdevtools.js"></script>
+</body>
+
+
+</html>

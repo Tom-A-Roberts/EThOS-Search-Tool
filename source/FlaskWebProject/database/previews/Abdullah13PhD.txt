@@ -1,0 +1,37 @@
+Parametric sweep search for parallel robot workspace determination
+The research presented in this thesis aims to augment the conventional kinematic-based
+parallel robot workspace determination into an interactive 3D visual system by
+highlighting the design issue clearly and providing important design information to the
+user in real-time. The conventional iteration involves heavy computation, high resolution
+data processing and multiple technical skills set which usually reduce the design option
+into amending an existing design most related to the requirement. The thesis presents a 3D
+simulation system that is open and modular and allows for algorithm and technical
+functional extensions.
+Following an extensive literature survey on key aspects relating to parallel design
+development, parallel robot singularity, and search for workspace, five main phases of
+experimental works were undertaken to develop a strategic search and analysis of parallel
+robots workspace.
+Phase 1 involves the development of a 3-dimensional simulation system based on Python
+in order to search for workspace and singularity. The 3-dimensional motions are based on
+Kinematic, and should integrate easily with various algorithms. The simulation system
+produces a draft quality result, which is scalable to higher resolutions. Phase 2 involves the
+development of geometric singularity and Grassmann singularity real-time test. The code
+should work effortlessly when user redefines the architecture or geometry of the robot.
+Phase 3 involves the development of Boolean Parametric sweep search strategy that
+provides an analysis and validation method for the system. The system has to consider
+various factors such as limit, edge, resolution, and travel direction. This phase involves the
+integration of 3D and 4D interpolation and extrapolation strategies including Trilinear, L-
+system fractal, Simplex, adjacency tree and Marching Cube. Phase 4 involves the
+development of a dynamic grid that is easily integrated into 2D and 3D databases. The
+haptic engine finds position and orientation information based on this dynamic grid. The
+grid is tested for a number of concepts such as Simplex, Binary tree and L-system fractal.
+It was found that the parametric sweep based on Boolean control is applicable in real-time
+dynamic grid system, where the direction, region and constraint are configurable by either
+the user or automatically by the system. Phase 5 involves the development of a controller
+for the Python simulation. This is a multiple Degree-of-Freedom device with two-way
+motor control for all axes, which is fitted with sensors to provide pre-processed value for
+distance and orientation on all axes. The controller is a haptic device that provides the user
+with force-feedback sensation while user operates and manipulates the device. The haptic
+device provides (i) control for the Python simulation, (ii) processed data to a Matlab and
+Solid Works system, and (iii) singularity-free control of an associated physical robot. The
+proposed system is finally verified against a number of applications.

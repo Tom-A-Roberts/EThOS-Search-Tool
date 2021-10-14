@@ -1,0 +1,6 @@
+However, many desirable software properties (such
+as portability) are obtained via adherence to coding standards, and there-
+fore fall outside the remit of formal specification and automatic verification. Unlike many other
+static checkers Exstatic can be used to examine code in a variety of lan-
+guages, including program code, in-line documentation, markup languages
+and so on.

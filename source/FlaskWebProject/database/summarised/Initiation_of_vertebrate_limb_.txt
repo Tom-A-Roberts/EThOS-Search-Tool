@@ -1,0 +1,7 @@
+Here I show that beads
+soaked in Fibroblast growth factors (FGFs) and placed in prospective flank of
+chick embryos induce formation of ectopic limb buds, which contain their
+own signaling regions and develop into complete limbs. If particular combinations of Hox gene expression determine
+where wings and legs develop, then formation of additional limbs from flank
+should involve changes in Hox gene expression which reflect the type of
+limb induced.

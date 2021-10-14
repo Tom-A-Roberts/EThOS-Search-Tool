@@ -1,0 +1,28 @@
+Division of Materials, Mechanics and Structures 
+The overall objective of this thesis was to develop a methodology for
+predicting the high strain rate properties of macro scale polymer composite
+materials through micro and meso scale finite element modelling.
+The focus in this study was on multi-layered multi-material polymer
+composite laminates consisting of 0/90 and  45 layers of either; S2
+Glass/Epoxy or Carbon/Epoxy non crimp fabric.
+A multi-scale finite element modelling methodology was developed at the
+micro and meso scale for predicting the elastic response, damage initiation,
+damage evolution and strain rate dependence of macro scale polymer
+composite materials.  The methodology was implemented in the Abaqus
+finite element package utilising Python scripting for simulation definition
+and Fortran code for user defined explicit material subroutines.
+Micro scale unit cells were tested in longitudinal, transverse and shear
+loading directions over a range of strain rates.  The results of the micro
+scale testing were converted into material properties of the meso scale
+yarns / tows.  Meso scale unit cells were tested in in-plane, through
+thickness and shear loading directions over of a range of strain rates.  The
+results of the meso scale testing were converted into material properties of
+macro scale polymer composite materials.
+The modelling methodology was validated against experimental testing
+conducted on meso scale samples over a range of strain rates using an
+electromechanical universal static test machine and an instrumented falling
+weight drop tower.
+The contribution to knowledge from this study is the development of a
+validated modelling methodology for predicting the elastic, damage and
+strain rate dependent response of polymer composite materials at a micro
+and meso scale.

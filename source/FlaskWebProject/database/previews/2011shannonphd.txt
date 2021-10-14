@@ -1,0 +1,26 @@
+The Construction of High-Performance Virtual Machines for Dynamic Languages
+Dynamic languages, such as Python and Ruby, have become more widely used
+over the past decade. Despite this, the standard virtual machines for these lan-
+guages have disappointing performance. These virtual machines are slow, not be-
+cause methods for achieving better performance are unknown, but because their
+implementation is hard. What makes the implementation of high-performance
+virtual machines difficult is not that they are large pieces of software, but that
+there are fundamental and complex interdependencies between their components.
+In order to work together correctly, the interpreter, just-in-time compiler, garbage
+collector and library must all conform to the same precise low-level protocols.
+In this dissertation I describe a method for constructing virtual machines for dy-
+namic languages, and explain how to design a virtual machine toolkit by building
+it around an abstract machine. The design and implementation of such a toolkit,
+the Glasgow Virtual Machine Toolkit, is described. The Glasgow Virtual Machine
+Toolkit automatically generates a just-in-time compiler, integrates precise garbage
+collection into the virtual machine, and automatically manages the complex inter-
+dependencies between all the virtual machine components.
+Two different virtual machines have been constructed using the GVMT. One is
+a minimal implementation of Scheme; which was implemented in under three
+weeks to demonstrate that toolkits like the GVMT can enable the easy construc-
+tion of virtual machines. The second, the HotPy VM for Python, is a high-
+performance virtual machine; it demonstrates that a virtual machine built with
+a toolkit can be fast and that the use of a toolkit does not overly constrain the
+high-level design. Evaluation shows that HotPy outperforms the standard Python
+interpreter, CPython, by a large margin, and has performance on a par with PyPy,
+the fastest Python VM currently available.

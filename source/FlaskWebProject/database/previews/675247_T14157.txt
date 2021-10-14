@@ -1,0 +1,44 @@
+The University of Strathclyde 
+In product design environments where safety is critical, industries can often be
+reluctant to adopt emerging technologies. This is the case for many endovascular
+device manufacturers, where advanced non-linear Finite Element Analysis methods
+are still to be incorporated into their product design functions. To encourage
+adoption this thesis explores the merits and limitations of newly developed
+constitutive models as implemented into leading numerical analysis software suites.
+Specific attention is given to the Holzapfel soft tissue and Auricchio Nitinol
+constitutive models.
+Limitations and merits are explored through the development of an integrated
+modelling framework. This framework was constructed around a case study for
+which Vascutek's Anaconda
+stent graft system was chosen. In its final iteration
+the framework took the form of a series of python scripts which could be imported
+into Abaqus 6.11 to generate a variety of FE studies.
+For the development of the python scripts, a generalised artery material model was
+required for which a vascular characterisation programme was initiated. This
+programme mechanically characterised three human abdominal aortas using
+uniaxial and biaxial characterisation methods. By deploying Anaconda proximal ring
+devices within cadaver specimens and recording deformations, the programme
+produced detailed out-of-plane deformation data for vascular tissue. Where
+possible, results obtained were combined with those found in the academic
+literature. From this, comprehensive data sets were created from which a
+generalised mechanical description for the abdominal aorta was proposed. In this
+study, the accuracy of such a generalised arterial description was also explored for
+the first time.
+The work herein present a range of advanced Finite Element modelling techniques.
+These techniques range from a bespoke three layered abdominal aorta arterial
+model to novel wire bundle modelling methods. A comprehensive study into
+Nitinol's load path dependency effects is also presented.  The study correlated the
+effect as captured within experimental results against those predicted by Finite
+Element Analysis. Findings of this study highlight limitations within the Auricchio
+constitutive model as implemented into Abaqus 6.11 and emphasise the need to
+model the entire loading regime when conducting Finite Element studies.
+The extensive validation procedures used to determine the accuracy of the
+integrated modelling framework are presented. It is shown for the case study
+chosen, that the framework is capable of capturing a range of complex device-
+artery interactions. It is also shown that the model is capable of predicting
+deformations within 35% of that measured during device deployment and cadaver
+specimen pressure-inflation experiments.
+It is a conclusion of this thesis, that from an understanding of the limitations
+involved, current FE technologies could be feasibly integrated into product design
+methodologies through the development of robust, computationally efficient
+design tools.

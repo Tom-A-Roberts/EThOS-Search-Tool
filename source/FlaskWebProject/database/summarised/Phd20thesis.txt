@@ -1,0 +1,5 @@
+by Weiwei Wang
+With the development of both computing power and software engineering, computer
+simulation of the micromagnetic model or atomistic spin model, has become an impor-
+tant tool for studying a wide range of different complex phenomena in magnetic ma-
+terials.

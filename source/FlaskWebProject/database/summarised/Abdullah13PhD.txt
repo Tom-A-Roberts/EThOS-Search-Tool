@@ -1,0 +1,6 @@
+The research presented in this thesis aims to augment the conventional kinematic-based
+parallel robot workspace determination into an interactive 3D visual system by
+highlighting the design issue clearly and providing important design information to the
+user in real-time. The conventional iteration involves heavy computation, high resolution
+data processing and multiple technical skills set which usually reduce the design option
+into amending an existing design most related to the requirement.

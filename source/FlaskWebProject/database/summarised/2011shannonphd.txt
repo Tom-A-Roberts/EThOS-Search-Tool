@@ -1,0 +1,6 @@
+In this dissertation I describe a method for constructing virtual machines for dy-
+namic languages, and explain how to design a virtual machine toolkit by building
+it around an abstract machine. The Glasgow Virtual Machine
+Toolkit automatically generates a just-in-time compiler, integrates precise garbage
+collection into the virtual machine, and automatically manages the complex inter-
+dependencies between all the virtual machine components.
