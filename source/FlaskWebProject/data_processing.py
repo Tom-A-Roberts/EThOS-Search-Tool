@@ -3,18 +3,19 @@ import FlaskWebProject.ATS_demo as esearch
 import FlaskWebProject.getTag as groupsystem
 from tika import parser
 import string
-from pdf2image import convert_from_path
+from pdf2image import convert_from_path, convert_from_bytes
+from PIL import Image
 import os
 from os import path
-from PIL import Image
 import math
+import time
 import numpy as np
 import collections
 from shutil import copyfile
 
 print("Loaded imports...\n")
 
-# Paths:
+# Paths (constants)
 SUMMARISED_PATH = 'FlaskWebProject/database/summarised/'
 RAW_TEXT_PATH = 'FlaskWebProject/database/raw_text/'
 PREVIEWS_PATH = 'FlaskWebProject/database/previews/'
@@ -57,21 +58,32 @@ def check_folders():
             os.makedirs(f)
             print("Created folder path: " + f)
 
-
 def SummarisePaper(paper_name):
     global stop_word, RAW_TEXT_PATH
     print("Summarising: " + paper_name)
+
 
     input = ""
 
     input = get_abstract(paper_name)
 
+
+    #path_name = RAW_TEXT_PATH + paper_name + ".txt"
+    #try:
+    #    with open(path_name,'r') as f:  #, encoding="utf8"
+    #        input = f.read()
+    #except Exception as e:
+    #    print("Paper " + paper_name + " failed: ")
+    #    print(e)
+    #    return None
+    
     summarization = ""
     min_characters = 300.0
     abstract_characters = len(input)
     proportion = min_characters / abstract_characters
 
     ### ML CODE:
+    #print("WARNING\nWARNING: ML CODE IS NOT LOADED!")
     sentence_set,sentence_with_index = esearch.split_sentence(input, punctuation_list="!.?")
     tfidf_matrix = esearch.get_tfidf_matrix(sentence_set,stop_word)
     sentence_with_words_weight = esearch.get_sentence_with_words_weight(tfidf_matrix)
@@ -79,6 +91,9 @@ def SummarisePaper(paper_name):
     sentence_score = esearch.get_similarity_weight(tfidf_matrix)
     sort_sent_weight = esearch.ranking_base_on_weigth(sentence_with_words_weight,sentence_with_position_weight,sentence_score, feature_weight = [0.6,0.2,0.2])
     summarization = esearch.get_summarization(sentence_with_index,sort_sent_weight,topK_ratio =proportion)
+
+
+
     ### END OF ML CODE
     
     return summarization.strip()
@@ -101,6 +116,14 @@ def clean_files(all_paper_names):
 
 def refresh_summarisation_queue():
     global all_paper_names, paper_queue, RAW_TEXT_PATH, SUMMARISED_PATH
+
+
+    #for ifile in os.listdir(RAW_TEXT_PATH):
+    #    filename = os.fsdecode(ifile)
+    #    if filename.endswith(".txt"):
+    #        filename_no_extension = os.path.splitext(filename)[0]
+    #        all_paper_names.add(filename_no_extension)
+
     clean_files(all_paper_names)
     
     paper_queue_set = set(all_paper_names)
@@ -164,18 +187,22 @@ def update_database_memory(percentage_to_cache):
 
 
 def count_pdfs():
-    global PDF_INPUT_PATH
-    count=0
-    for ifile in os.listdir(PDF_INPUT_PATH):
-        filename = os.fsdecode(ifile)
-        if filename.lower().endswith(".pdf"):
-            count += 1
-    return count
+    global paper_locations
+    #count=0
+    #for ifile in os.listdir(PDF_INPUT_PATH):
+    #    filename = os.fsdecode(ifile)
+    #    if filename.lower().endswith(".pdf"):
+    #        count += 1
+    return len(paper_locations)
 
 def load_data_into_memory():
     check_folders()
     load_names()
 
+
+def process_ticket2(ticket):
+    print(ticket)
+    
 
 
 def update_database(rebuild_summarisations):
@@ -208,6 +235,8 @@ def update_database(rebuild_summarisations):
     # Ensure word vectors matrix is up to date, and the name order list.
     check_word_vector_paper_names()
     print("\n\n- Backend pre-processing complete.\n###\n")
+
+
 
     processes_complete = 1
     processes_total = 1
@@ -257,14 +286,14 @@ def cleanup_text(text):
 
 def read_and_store_pdf(paper_name):
     """Reads a single PDF and converts it to raw text"""
-    global PDF_INPUT_PATH, RAW_TEXT_PATH, changed_paper_names, paper_locations
+    global RAW_TEXT_PATH, changed_paper_names, paper_locations
 
     out_str = ""
 
-    pdf_path = paper_locations[paper_name]#PDF_INPUT_PATH + paper_name + '.pdf'
+    pdf_path = paper_locations[paper_name]# + paper_name + '.pdf'
 
     #if paper_name in changed_paper_names:
-    #    pdf_path = PDF_INPUT_PATH + changed_paper_names[paper_name] + '.pdf'
+    #    pdf_path =  + changed_paper_names[paper_name] + '.pdf'
 
 
     raw = parser.from_file(pdf_path)
@@ -471,11 +500,16 @@ def LineIsTitle(line):
     return False
 
 def findTitle(paper_name):
-    global download_folder
+    global download_folder, paper_locations
     
     #download_folder = os.path.dirname(os.path.abspath(__file__)) + "\\database\\downloaded"
     #if not path.exists(raw_text_version_path):
-    test_path = download_folder + "\\" + paper_name +".txt"
+
+    pdf_path = paper_locations[paper_name]
+    dirname = os.path.dirname(pdf_path)
+
+    #test_path = download_folder + "\\" + paper_name +".txt"
+    test_path = path.join(dirname, paper_name +".txt")
     if path.exists(test_path):
         f = open(test_path, "r")
         out = f.read()
@@ -644,7 +678,7 @@ def load_existing_word_vectors():
 
 
     count = 0
-    total = 1
+
 
     with open(NAMES_ORDER_PATH, 'w') as f:
         f.write("")
@@ -730,6 +764,7 @@ def check_word_vector_paper_names():
 
 def write_groups_to_folders(papers_in_each_group):
     global PDF_INPUT_PATH, changed_paper_names
+    raise NotImplementedError
     for paper_group in range(0, len(papers_in_each_group)):
         group_directory = 'FlaskWebProject/static/groups/Group ' + str(paper_group + 1) + '/'
         if not os.path.exists(group_directory):
@@ -764,7 +799,7 @@ def get_summarised_text(paper_name):
             f.close()
         except FileNotFoundError:
             refresh_summarisation_queue()
-            complete_summarisation_queue()
+            asyncio.run(complete_summarisation_queue())
             try:
                 f = open(SUMMARISED_PATH + paper_name + ".txt", "r") #, encoding="utf8"
                 summarised_papers[paper_name] = f.read()
@@ -776,7 +811,7 @@ def get_summarised_text(paper_name):
 
 
 def get_thumbnail_url(paper_name):
-    global THUMBS_PATH, PDF_INPUT_PATH, paper_locations
+    global THUMBS_PATH, paper_locations
     thumb_path = THUMBS_PATH + paper_name + '.jpeg'
     if path.exists(thumb_path):
         return thumb_path
@@ -794,7 +829,7 @@ def get_thumbnail_url(paper_name):
 
 
 def get_paper_pdf_url(paper_name):
-    global PDF_INPUT_PATH, changed_paper_names, paper_locations
+    global paper_locations
     #if paper_name in changed_paper_names:
     #    return PDF_INPUT_PATH + changed_paper_names[paper_name] + '.pdf'
     return paper_locations[paper_name] #PDF_INPUT_PATH + paper_name + '.pdf'
@@ -874,9 +909,9 @@ def delete_generated_data():
     paper_previews = {}
     check_folders()
 
-def get_paper_names_in_folder(folder_name):
-    global papers_in_folder
-    return papers_in_folder[folder_name]
+#def get_paper_names_in_folder(folder_name):
+#    global papers_in_folder
+#    return papers_in_folder[folder_name]
 
 def get_group_tag(papers_in_group):
     global stop_word_set
@@ -936,10 +971,6 @@ def process_groups(ticket):
     ticket.papers_in_each_group = {}
     ticket.thumbnail_urls = {}
 
-    if len(ticket.papers_and_ids) == 0 and len(ticket.paper_names) > 0:
-        for paper_name in ticket.paper_names:
-            ticket.papers_and_ids[paper_name] = paper_name
-
     papers_to_cluster = ticket.papers_and_ids
     amount_of_groups = ticket.number_of_groups
 
@@ -982,7 +1013,7 @@ def get_all_group_data(ticket):
     print(len(ticket.papers_in_each_group))
 
     # TEMP, REMOVE THIS!!!!
-    ticket.papers_in_each_group = {}
+    #ticket.papers_in_each_group = {}
 
 
     # If not already clustered:

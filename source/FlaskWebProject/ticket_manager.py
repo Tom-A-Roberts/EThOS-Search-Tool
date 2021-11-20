@@ -1,6 +1,18 @@
 import FlaskWebProject.data_processing as backend
+from tika import parser
+import string
 import os
+from os import path
+from PIL import Image
+import math
+import time
+import numpy as np
+import collections
+import pickle
+from shutil import copyfile
+import shutil
 import jsonpickle
+import FlaskWebProject.webscraping as webscraper
 
 tickets = {}
 biggest_ticket_id = -1
@@ -41,9 +53,23 @@ class Ticket:
                 return False
         return True
 
-    def add_papers(self, paper_enumerable, e):
+    def add_papers(paper_enumerable, e):
         for p in paper_enumerable:
             self.paper_names.add(p)
+
+    def load_papers(self, id_folder):
+        #found_ids = []
+        #found_names = []
+        for filename in os.listdir(id_folder):
+            if filename.endswith(".pdf"):
+                ethos_id = filename.split(".")[-2]
+                f= open(path.join(id_folder, ethos_id + ".txt"),"r", encoding="utf-8")
+                name = f.read()
+                f.close()
+
+                #found_ids.append(ethos_id)
+                #found_names.append(name)
+                self.papers_and_ids[ethos_id] = name
 
 
 def write_tickets_to_file():
@@ -104,6 +130,22 @@ def load_tickets_from_file():
             f.close()
 
 
+def move_downloaded_pdfs_to_input_folder(ticket, from_folder, to_folder):
+    for filename in os.listdir(from_folder):
+        if filename.endswith(".pdf"):
+            ethos_id = filename.split(".")[-2]
+            text_filepath = path.join(from_folder, ethos_id + ".txt")
+            text_targetpath = path.join(to_folder, ethos_id + ".txt")
+            pdf_filepath = path.join(from_folder, filename)
+            pdf_targetpath = path.join(to_folder, filename)
+            if path.exists(text_filepath):
+                shutil.move(text_filepath, text_targetpath)
+                shutil.move(pdf_filepath, pdf_targetpath)
+
+            #found_ids.append(ethos_id)
+            #found_names.append(name)
+            #ticket.papers_and_ids[ethos_id] = name
+
 # Not currently referenced:
 def process_ticket(ticket):
     """
@@ -116,20 +158,38 @@ def process_ticket(ticket):
 
     print(ticket.search)
     #downloaded_ids = webscraper.scrape(ticket.search, 2, backend.download_folder)
+
     
     ticket.papers_and_ids = {}
 
-    found_ids = []
-    found_names = []
-    for filename in os.listdir(backend.download_folder):
-        if filename.endswith(".pdf"):
-            ethos_id = filename.split(".")[-2]
-            f= open(backend.download_folder + "\\" + ethos_id + ".txt","r", encoding="utf-8")
-            name = f.read()
-            f.close()
-            found_ids.append(ethos_id)
-            found_names.append(name)
-            ticket.papers_and_ids[ethos_id] = name
+    #id_folder = path.join(backend.download_folder, str(ticket.ID))
+    
+    id_folder = path.join(backend.PDF_INPUT_PATH, str(ticket.ID))
+    download_folder = backend.download_folder
+
+    if path.exists(id_folder):
+        ticket.load_papers(id_folder)
+    else:
+        os.mkdir(id_folder)
+
+    if len(ticket.papers_and_ids) == 0:
+        downloaded_ids = webscraper.scrape(ticket.search, 3, download_folder)
+        move_downloaded_pdfs_to_input_folder(ticket, download_folder, id_folder)
+        ticket.load_papers(id_folder)
+
+
+    #found_ids = []
+    #found_names = []
+    #for filename in os.listdir(id_folder):
+    #    if filename.endswith(".pdf"):
+    #        ethos_id = filename.split(".")[-2]
+    #        f= open(path.join(id_folder, ethos_id + ".txt"),"r", encoding="utf-8")
+    #        name = f.read()
+    #        f.close()
+
+    #        found_ids.append(ethos_id)
+    #        found_names.append(name)
+    #        ticket.papers_and_ids[ethos_id] = name
 
 
     move_to_path = backend.PDF_INPUT_PATH
@@ -159,9 +219,8 @@ def create_new_ticket(searched_text, group_size, clustering_dimensions):
     tickets[ticket_id] = Ticket(ticket_id, searched_text)
     tickets[ticket_id].number_of_groups = group_size
     
-    # TEMPORARILY just load all the papers from the input folder:
-    tickets[ticket_id].paper_names = backend.get_paper_names_in_folder('')
-
+    # TEMP: 
+    #tickets[ticket_id].paper_names = backend.get_paper_names_in_folder('')
     #if "python" in searched_text.lower():
     #    tickets[ticket_id].paper_names = backend.get_paper_names_in_folder("Python")
     #else:
@@ -192,6 +251,7 @@ def get_ticket_queue():
         queue_pos = i
         ticket_list.append({"ticket_id": ticket_id, "ticket_name": ticket_name, "progress":progress, "status":status, "priority":priority, "queue_pos":queue_pos})
     print("ticket number: ", len(ticket_list))
+    print(ticket_list)
     return ticket_list
 
 load_tickets_from_file()

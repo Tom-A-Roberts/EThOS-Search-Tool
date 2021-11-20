@@ -1,10 +1,19 @@
+
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 import zipfile
 import shutil
 
+#from selenium import webdriver
+#from webdriver_manager.chrome import ChromeDriverManager
+
+
 account_user = "thomas12roberts@gmail.com"
+# Fake/non personal password:
 account_pass = "plaintext"
 
 human_handling_mode = False
@@ -188,7 +197,3 @@ class ScrapeSpider():
         download_button = sel.find_element_by_class_name("download-button")
         download_button.click()
         return ethos_id
-
-
-if __name__ == '__main__':
-    downloaded_ids = scrape("python,physics", 3, "./FlaskWebProject/webscraper/downloads")
